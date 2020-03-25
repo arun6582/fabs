@@ -67,13 +67,13 @@ def venv(c, env_dir, env_name='env', purge=False, no_cache=True):
     if(purge):
         c.run("rm -rf %s/%s" % (env_dir, env_name))
     with c.cd(env_dir):
-        c.run("python3 -m venv %s --without-pip" % env_name)
+        c.run("python3.7 -m venv %s" % env_name)
     with virtualenv(c, env_dir, env_name):
-        c.run("pip3 install wheel")
+        c.run("pip install wheel")
         if(no_cache):
-            c.run("cat %s/requirements.txt |xargs -I {} pip3 install {} --upgrade --no-cache-dir" % env_dir)
+            c.run("cat %s/requirements.txt |xargs -I {} pip install {} --upgrade --no-cache-dir" % env_dir)
         else:
-            c.run("pip3 install -r %s/requirements.txt" % env_dir)
+            c.run("pip install -r %s/requirements.txt" % env_dir)
 
 
 @task
