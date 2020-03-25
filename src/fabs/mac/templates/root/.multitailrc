@@ -1,5 +1,0 @@
-colorscheme:mylog
-cs_re:cyan:.*(INFO).*
-cs_re:green:.*(DEBUG).*
-cs_re:red:.*(WARNING).*
-cs_re:red:.*(ERROR).*

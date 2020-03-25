@@ -1,4 +1,0 @@
-run:
-  echo: True
-  pty: True
-  warn: True
