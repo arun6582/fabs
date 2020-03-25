@@ -1,7 +1,7 @@
-from setuptools import setup, find_namespace_packages
+from setuptools import setup, find_packages
 setup(
   name='fabs',
-  packages=find_namespace_packages(include=["src.*"]),
+  packages=find_packages(),
   version='1.0',
   author='Arun',
   author_email='arun6582@gmail.com',
