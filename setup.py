@@ -1,7 +1,7 @@
 from setuptools import setup
 setup(
   name='fabs',
-  packages=['fabs', ],
+  packages=['fabs', 'fabs/mac', 'fabs/ubuntu'],
   version='1.0',
   author='Arun',
   author_email='arun6582@gmail.com',
