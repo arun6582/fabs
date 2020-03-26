@@ -63,7 +63,7 @@ def yarn_build(c, path):
 
 
 @task
-def venv(c, env_dir, env_name='env', purge=False, no_cache=True):
+def venv(c, env_dir, env_name='env', purge=False, no_cache=False):
     if(purge):
         c.run("rm -rf %s/%s" % (env_dir, env_name))
     with c.cd(env_dir):
