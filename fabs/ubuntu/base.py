@@ -67,7 +67,7 @@ def venv(c, env_dir, env_name='env', purge=False, no_cache=False):
     if(purge):
         c.run("rm -rf %s/%s" % (env_dir, env_name))
     with c.cd(env_dir):
-        c.run("python3.7 -m venv %s" % env_name)
+        c.run("python3 -m venv %s" % env_name)
     with virtualenv(c, env_dir, env_name):
         c.run("pip install wheel")
         if(no_cache):
