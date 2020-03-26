@@ -71,7 +71,7 @@ def venv(c, env_dir, env_name='env', purge=False, no_cache=True):
     with virtualenv(c, env_dir, env_name):
         c.run("pip install wheel")
         if(no_cache):
-            c.run("cat %s/requirements.txt |xargs -I {} pip install {} --upgrade --no-cache-dir" % env_dir)
+            c.run("pip install -r %s/requirements.txt --no-cache-dir" % env_dir)
         else:
             c.run("pip install -r %s/requirements.txt" % env_dir)
 
