@@ -9,6 +9,7 @@ setup(
         'fabric>=2.5.0'
     ],
     include_package_data=True,
+    zip_safe=False,
     classifiers=[
         'Programming Language :: Python :: 3.3',
         'Programming Language :: Python :: 3.4',
