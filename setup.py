@@ -8,6 +8,7 @@ setup(
     install_requires=[
         'fabric>=2.5.0'
     ],
+    include_package_data=True,
     classifiers=[
         'Programming Language :: Python :: 3.3',
         'Programming Language :: Python :: 3.4',
