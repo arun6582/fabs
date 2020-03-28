@@ -114,7 +114,7 @@ def systemd(c, action, file_path, wait_before_restart=0, dest_filename=None, des
 def cron(c, action, minute, hour, day_month, month, day_week, cmd, remove_regex=None):
     if(action == '+'):
         c.run(
-            'crontab -l | { cat; echo -e "%s %s %s %s %s %s >> /tmp/cron.log 2>&1\n"; } | crontab -' % (
+            'crontab -l | awk NF | { cat; echo -e "%s %s %s %s %s %s >> /tmp/cron.log 2>&1\n"; } | crontab -' % (
                 minute,
                 hour,
                 day_month,
