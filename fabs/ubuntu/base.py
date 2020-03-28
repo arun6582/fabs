@@ -82,7 +82,7 @@ def free_space(c):
 
 
 @task
-def write_template(c, file_path, destination_path=None, return_str=False, dest_name_prefix=None, template_context=None, sudo=False):
+def write_template(c, file_path, destination_path=None, return_str=False, dest_file_prefix=None, template_context=None, sudo=False):
     with open(file_path) as f:
         template = Template(f.read())
 
@@ -90,8 +90,8 @@ def write_template(c, file_path, destination_path=None, return_str=False, dest_n
     output = template.render(template_context)
     if(return_str):
         return output
-    if(dest_name_prefix):
-        filename = "%s_%s" % (dest_name_prefix, file_path.split('/')[-1])
+    if(dest_file_prefix):
+        filename = "%s_%s" % (dest_file_prefix, file_path.split('/')[-1])
     else:
         filename = file_path.split('/')[-1]
     assert destination_path

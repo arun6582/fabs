@@ -68,11 +68,11 @@ def bash(c):
 
 
 @task
-def systemd(c, action, file_path, wait_before_restart=0, dest_filename=None, dest_name_prefix=None, template_context=None, sudo=True):
+def systemd(c, action, file_path, wait_before_restart=0, dest_filename=None, dest_file_prefix=None, template_context=None, sudo=True):
 
     def _filename(x):
-        if(dest_name_prefix):
-            return "%s%s" % (dest_name_prefix, x)
+        if(dest_file_prefix):
+            return "%s%s" % (dest_file_prefix, x)
         return x
 
     dest_dir = "/etc/systemd/system"
@@ -87,7 +87,7 @@ def systemd(c, action, file_path, wait_before_restart=0, dest_filename=None, des
         base.write_template(
             c,
             file_path,
-            dest_name_prefix=dest_name_prefix,
+            dest_file_prefix=dest_name_prefix,
             destination_path=destination_path,
             template_context=template_context,
             sudo=sudo
