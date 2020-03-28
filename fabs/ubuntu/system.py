@@ -87,7 +87,7 @@ def systemd(c, action, file_path, wait_before_restart=0, dest_filename=None, des
         base.write_template(
             c,
             file_path,
-            dest_file_prefix=dest_name_prefix,
+            dest_file_prefix=dest_file_prefix,
             destination_path=destination_path,
             template_context=template_context,
             sudo=sudo
