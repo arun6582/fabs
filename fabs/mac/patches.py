@@ -33,6 +33,31 @@ def proxy(c, action, port, user, host, network):
     elif(action == 'stop'):
         c.run('networksetup -setsocksfirewallproxystate %s off' % network)
 
+
+@task
+def port_forward(c, action, local_port, remote_port, user, host):
+    if(action == '1'):
+        action = 'start'
+    elif action == '0':
+        action = 'stop'
+
+    system.launchctl(
+        c,
+        action,
+        label='port.fordward.%s.tunnel' % local_port,
+        wait_before_restart=0,
+        file_path="%s/%s" % (base.root_templates, 'port_forwarding.plist'),
+        dest_filename="port_forwarding_%s_%s.plist" %  (local_port, remote_port),
+        template_context={
+            'host': host,
+            'user': user,
+            'local_port': local_port,
+            'remote_port': remote_port,
+            'logfile': '/tmp/port_forwarding.log'
+        }
+    )
+
+
 @task
 def dotfiles(c, alias):
     # alias is namespace for files in git repo

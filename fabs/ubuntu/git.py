@@ -14,3 +14,9 @@ def clone(c, git_dir, git_url, purge=False):
 def pull(c, git_dir):
     with c.cd(git_dir):
         c.run("git pull origin master")
+
+@task
+def force_fetch(c, git_dir, branch="master"):
+    with c.cd(git_dir):
+        c.run("git fetch --all")
+        c.run("git reset --hard origin/%s" % branch)
