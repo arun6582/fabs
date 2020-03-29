@@ -2,6 +2,7 @@ from jinja2 import Template
 from fabric import task
 from contextlib import contextmanager
 import uuid
+import os
 
 
 @task
@@ -22,6 +23,7 @@ def write_file(c, path, content, sudo=False):
     else:
         c.put(temp_file, temp_file)
         c.sudo('mv %s %s' % (temp_file, path))
+    os.remove(temp_file)
 
 
 @task

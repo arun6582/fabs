@@ -69,6 +69,7 @@ def write_file(c, path, content, sudo=False):
     with open(temp_file, 'wb') as f:
         f.write(content)
         c.sudo('mv %s %s' % (temp_file, path))
+    os.remove(temp_file)
 
 
 @task
