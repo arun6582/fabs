@@ -55,7 +55,7 @@ def virtualenv(c, path, env_name='env'):
 
 def env_prefix(env=None):
     env = env or {'dummy': 1}
-    return ' '.join(['='.join([str(j) for j in i]) for i in env.items()])
+    return ' '.join(["""%s='%s'""" % (i[0], i[1]) for i in env.items()])
 
 
 @task
