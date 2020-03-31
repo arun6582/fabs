@@ -13,20 +13,20 @@ def add_user(c, username, ssh_key_file=None):
 
     with open(ssh_key_file) as fd:
         ssh_key = fd.readline().strip()
-    c.run("useradd -m %s" % username)
-    c.run("usermod -s /bin/bash %s" % username)
+    c.sudo("useradd -m %s" % username)
+    c.sudo("usermod -s /bin/bash %s" % username)
     authorized_keys = "authorized_keys"
-    base.append(c, "/etc/sudoers", "%s ALL=(ALL) NOPASSWD:ALL" % username)
+    base.append(c, "/etc/sudoers", "%s ALL=(ALL) NOPASSWD:ALL" % username, sudo=True)
     with c.cd("/home/%s" % username):
-        c.run("chmod go-w .")
-        c.run("mkdir .ssh")
-        c.run("chmod 700 .ssh")
-        c.run("touch .ssh/%s" % (authorized_keys))
-        c.run("chown %s:%s .ssh" % (username, username))
-        c.run("chown %s:%s .ssh/%s" % (username, username, authorized_keys))
-        c.run('chmod 644 .ssh/%s' % authorized_keys)
-        base.append(c, ".ssh/%s" % authorized_keys, ssh_key)
-        c.run("service ssh restart")
+        c.run("sudo chmod go-w .")
+        c.run("sudo mkdir .ssh")
+        c.run("sudo chmod 700 .ssh")
+        c.run("sudo touch .ssh/%s" % (authorized_keys))
+        c.run("sudo chown %s:%s .ssh" % (username, username))
+        c.run("sudo chown %s:%s .ssh/%s" % (username, username, authorized_keys))
+        c.run('sudo chmod 644 .ssh/%s' % authorized_keys)
+        base.append(c, ".ssh/%s" % authorized_keys, ssh_key, sudo=True)
+        c.run("sudo service ssh restart")
 
 
 @task
