@@ -48,7 +48,7 @@ def yarn_build(c, path):
 @task
 def append(c, path, content, sudo=False):
     if(sudo):
-        return c.sudo('echo "%s" | sudo tee -a "%s"' % (content, path))
+        return c.run('echo "%s" | sudo tee -a "%s"' % (content, path))
     c.run('echo "%s" | tee -a "%s"' % (content, path))
 
 
