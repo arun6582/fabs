@@ -2,7 +2,7 @@ from setuptools import setup, find_packages
 setup(
     name='fabs',
     packages=find_packages(),
-    version='1.0.2',
+    version='1.0.3',
     author='Arun',
     author_email='arun6582@gmail.com',
     install_requires=[
