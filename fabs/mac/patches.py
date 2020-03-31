@@ -92,13 +92,15 @@ def unload_plist(c, grep_regex, path):
 
 
 @task
-def find_and_replace(c, find, replace):
-    c.run("ag %s -l |xargs -I {} gsed -i -E 's/%s/%s/' {}" % (find, find, replace))
+def find_and_replace(c, find, replace, path=None):
+    path = path or ''
+    c.run("ag %s %s -l |xargs -I {} gsed -i -E 's/%s/%s/' {}" % (find, path, find, replace))
 
 
 @task
-def find_and_replace_filenames(c, find, replace):
-    c.run("ag -g %s |xargs -I {} sh -c \'result=\"{}\"; mv {} \"${result/%s/%s}\"\'" % (find, find, replace))
+def find_and_replace_filenames(c, find, replace, path=None):
+    path = path or ''
+    c.run("ag %s -g %s |xargs -I {} sh -c \'result=\"{}\"; mv {} \"${result/%s/%s}\"\'" % (path, find, find, replace))
 
 
 @task
