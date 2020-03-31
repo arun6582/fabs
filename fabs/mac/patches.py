@@ -8,7 +8,7 @@ home = str(Path.home())
 
 
 @task
-def proxy(c, action, port, user, host, network):
+def proxy(c, action, local_port, host, network):
     if(action == '1'):
         action = 'start'
     elif action == '0':
@@ -22,13 +22,12 @@ def proxy(c, action, port, user, host, network):
         file_path="%s/%s" % (base.root_templates, 'proxy.plist'),
         template_context={
             'host': host,
-            'port': port,
-            'user': user,
+            'local_port': local_port,
             'logfile': '/tmp/proxy.log'
         }
     )
     if(action == 'start'):
-        c.run('networksetup -setsocksfirewallproxy %s localhost %s' % (network, port))
+        c.run('networksetup -setsocksfirewallproxy %s localhost %s' % (network, local_port))
         c.run('networksetup -setsocksfirewallproxystate %s on' % network)
     elif(action == 'stop'):
         c.run('networksetup -setsocksfirewallproxystate %s off' % network)
