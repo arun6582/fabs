@@ -7,10 +7,12 @@
 	<key>ProgramArguments</key>
 	<array>
       <string>ssh</string>
+      <string>-o</string>
+      <string>StrictHostKeyChecking=no</string>
       <string>-v</string>
       <string>-ND</string>
-      <string>{{ port }}</string>
-      <string>{{ user }}@{{ host }}</string>
+      <string>{{ local_port }}</string>
+      <string>{{ host }}</string>
 	</array>
 	<key>RunAtLoad</key>
 	<true/>
