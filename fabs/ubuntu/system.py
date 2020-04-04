@@ -105,6 +105,7 @@ def systemd(c, action, file_path, wait_before_restart=0, dest_filename=None, des
         _config()
         c.sudo("systemctl daemon-reload")
         c.sudo("systemctl start %s" % filename)
+        time.sleep(wait_before_restart)
     elif(action == "stop"):
         c.sudo("systemctl stop %s" % filename)
         c.sudo("systemctl disable %s" % filename)
