@@ -130,3 +130,14 @@ def cron(c, action, minute, hour, day_month, month, day_week, cmd, remove_regex=
         assert remove_regex is not None
         c.run("crontab -l | grep -v '%s' | crontab -" % remove_regex)
     c.run('crontab -l')
+
+
+@task
+def free_space(c):
+    c.run("df -h")
+
+
+@task
+def swapoff(c):
+    c.sudo("""swapoff -a""")
+    c.sudo("""sed -i.bak '/ swap / s/^(.*)$/#1/g' /etc/fstab""")

@@ -79,11 +79,6 @@ def venv(c, env_dir, env_name='env', purge=False, no_cache=False):
 
 
 @task
-def free_space(c):
-    c.run("df -h")
-
-
-@task
 def write_template(c, file_path, destination_path=None, return_str=False, dest_file_prefix=None, template_context=None, sudo=False):
     with open(file_path) as f:
         template = Template(f.read())
