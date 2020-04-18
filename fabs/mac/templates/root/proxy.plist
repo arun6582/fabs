@@ -9,6 +9,8 @@
       <string>ssh</string>
       <string>-o</string>
       <string>StrictHostKeyChecking=no</string>
+      <string>-p</string>
+      <string>{{ remote_port }}</string>
       <string>-v</string>
       <string>-ND</string>
       <string>{{ local_port }}</string>

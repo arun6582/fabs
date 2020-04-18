@@ -8,7 +8,7 @@ home = str(Path.home())
 
 
 @task
-def proxy(c, action, local_port, host, network):
+def proxy(c, action, local_port, host, network, remote_port=9836):
     if(action == '1'):
         action = 'start'
     elif action == '0':
@@ -23,6 +23,7 @@ def proxy(c, action, local_port, host, network):
         template_context={
             'host': host,
             'local_port': local_port,
+            'remote_port': remote_port,
             'logfile': '/tmp/proxy.log'
         }
     )
