@@ -27,3 +27,9 @@ def install_postgres_10(
             **postgresql_conf
         )
     c.run("sudo systemctl restart postgresql")
+
+
+@task
+def node_10(c):
+    c.run("curl -sL https://deb.nodesource.com/setup_10.x | sudo -E bash -")
+    c.sudo("apt-get install -y nodejs")
