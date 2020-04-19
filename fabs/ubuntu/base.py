@@ -63,6 +63,11 @@ def yarn_build(c, path):
     with c.cd(path):
         c.run("yarn; yarn build")
 
+@task
+def npm_build(c, path):
+    with c.cd(path):
+        c.run("npm install; npm build")
+
 
 @task
 def venv(c, env_dir, env_name='env', purge=False, no_cache=False):
