@@ -66,10 +66,9 @@ def write_file(c, path, content, sudo=False):
         with open(path, 'w') as f:
             return f.write(content)
     temp_file = '/tmp/%s' % uuid.uuid4().hex
-    with open(temp_file, 'wb') as f:
+    with open(temp_file, 'w') as f:
         f.write(content)
         c.sudo('mv %s %s' % (temp_file, path))
-    os.remove(temp_file)
 
 
 @task
