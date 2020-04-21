@@ -1,6 +1,6 @@
 # fabs
 
-## this project contains reusable fabric tasks for ubuntu and mac
+### This project contains reusable fabric tasks for ubuntu and mac
 
 You can install this by running
 
