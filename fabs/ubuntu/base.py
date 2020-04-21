@@ -5,6 +5,10 @@ import uuid
 import os
 
 
+self_dir_path = os.path.dirname(os.path.realpath(__file__))
+root_templates = "%s/templates/root" % self_dir_path
+
+
 @task
 def mkdir(c, path, sudo=False):
     cmd = "mkdir -p '%s'" % path

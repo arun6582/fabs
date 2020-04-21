@@ -33,3 +33,22 @@ def install_postgres_10(
 def node_10(c):
     c.run("curl -sL https://deb.nodesource.com/setup_10.x | sudo -E bash -")
     c.sudo("apt-get install -y nodejs")
+
+
+@task
+def go_install(c):
+    go_tar = '/tmp/go.tar.gz'
+    c.run('wget -O %s https://dl.google.com/go/go1.14.2.linux-amd64.tar.gz' % go_tar)
+    c.sudo('tar -C /usr/local -xzf %s' % go_tar)
+
+    go = '/usr/local/go/bin/go'
+    print('Executable: %(go)s' % {'go': go})
+
+    base.write_template(
+        c,
+        file_path="%s/hello.go" % base.root_templates,
+        destination_path="/tmp/"
+    )
+    with c.cd('/tmp/'):
+        c.run('%s build hello.go' % go)
+        c.run('./hello')
