@@ -35,14 +35,15 @@ def venv(c, project_path, env_name='env', purge=False):
 
 
 def env_prefix(env):
+    env = env or {}
     env['dummy'] = 1
     return " ".join(["%s=%s" % (i[0], i[1]) for i in env.items()])
 
 
 @task
-def yarn_build(c, path):
+def yarn_build(c, path, env=None):
     with c.cd(path):
-        c.run("yarn; yarn build")
+        c.run("yarn; %s yarn build" % env_prefix(env))
 
 
 @task

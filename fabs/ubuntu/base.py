@@ -63,9 +63,9 @@ def env_prefix(env=None):
 
 
 @task
-def yarn_build(c, path):
+def yarn_build(c, path, env=None):
     with c.cd(path):
-        c.run("yarn; yarn build")
+        c.run("yarn; %s yarn build" % env_prefix(env))
 
 @task
 def npm_build(c, path):
