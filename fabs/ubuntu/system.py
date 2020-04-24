@@ -72,8 +72,10 @@ def systemd(c, action, file_path, wait_before_restart=0, dest_filename=None, des
 
     def _filename(x):
         if(dest_file_prefix):
-            return "z-%s-%s" % (dest_file_prefix, x)
-        return x
+            args = ('z', dest_file_prefix, x)
+        else:
+            args = ('z', x)
+        return '-'.join(args)
 
     dest_dir = "/etc/systemd/system"
     if(dest_filename):
