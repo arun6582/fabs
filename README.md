@@ -16,10 +16,23 @@ Run
 
 To install golang on a server
 
-`fab packages.go-install -H sysadmin@139.59.23.11`
+`fab packages.go-install -H [user]@[host]`
 
 And you have go working in just under 15 secs.
 
 I'm looking for contribution to increase number of fabs.
 
 You can issue a pull request if you find some fab tasks which are reusable for others too.
+---
+
+Say you want to start a ssh tunnel proxy service on a macbook pro which
+
+all you need to do is run
+
+`invoke patches.proxy 1 6666 [user]@[host] Wi-Fi --remote-port 22`
+
+And fire up chrome and google search 'myip' and you will your ip is that of the server.
+
+To turn that off run 
+
+`invoke patches.proxy 0 6666 [user]@[host] Wi-Fi --remote-port 22`
