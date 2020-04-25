@@ -26,11 +26,11 @@ I'm looking for contribution to increase number of fabs.
 
 Say you want to start a ssh tunnel proxy service on a macbook pro which
 
-all you need to do is run
+All you need to do is run
 
 `invoke patches.proxy 1 6666 [user]@[host] Wi-Fi --remote-port 22`
 
-And fire up chrome and google search 'myip' and you will your ip is that of the server.
+And fire up chrome and google search 'myip' and you will see ip is that of the server.
 
 To turn that off run 
 
