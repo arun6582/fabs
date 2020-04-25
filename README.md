@@ -20,8 +20,6 @@ To install golang on a server
 
 And you have go working in just under 15 secs.
 
-I'm looking for contribution to increase number of fabs.
-
 ---
 
 Say you want to start a ssh tunnel proxy service on a macbook pro which
@@ -38,4 +36,6 @@ To turn that off run
 
 ---
 
-You can issue a pull request if you find some fab tasks which are reusable for others too.
+#### I'm looking for contribution to increase number of fabs.
+
+#### You can issue a pull request if you find some fab tasks which are reusable for others too.
