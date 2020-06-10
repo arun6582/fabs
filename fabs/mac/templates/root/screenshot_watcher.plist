@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+  <key>EnvironmentVariables</key>
+  <dict>
+        {% for env in envs %}
+        <key>{{ env[0] }}</key>
+        <string>{{ env[1] }}</string>
+        {% endfor %}
+  </dict>
+	<key>Label</key>
+  <string>{{ label }}</string>
+	<key>ProgramArguments</key>
+	<array>
+      <string>/bin/bash</string>
+      <string>{{ path_to_script }}</string>
+      <string>{{ screen_shot_path }}</string>
+	</array>
+   <key>WatchPaths</key>
+   <array>
+         <string>{{ screen_shot_path }}</string>
+   </array>
+	<key>StandardOutPath</key>
+	<string>{{logfile}}</string>
+	<key>StandardErrorPath</key>
+	<string>{{logfile}}</string>
+</dict>
+</plist>

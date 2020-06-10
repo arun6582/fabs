@@ -47,7 +47,7 @@ def port_forward(c, action, local_port, remote_port, user, host):
         label='port.fordward.%s.tunnel' % local_port,
         wait_before_restart=0,
         file_path="%s/%s" % (base.root_templates, 'port_forwarding.plist'),
-        dest_filename="port_forwarding_%s_%s.plist" %  (local_port, remote_port),
+        dest_filename="port_forwarding_%s_%s.plist" % (local_port, remote_port),
         template_context={
             'host': host,
             'user': user,
@@ -83,11 +83,11 @@ def dotfiles(c, alias):
 def unload_plist(c, grep_regex, path):
     path = os.path.abspath(path)
     c.run(
-        "ls %s | grep %s | xargs -I {} launchctl unload %s/{}" % 
+        "ls %s | grep %s | xargs -I {} launchctl unload %s/{}" %
         (path, grep_regex, path)
     )
     c.run(
-        "ls %s | grep %s | xargs -I {} rm -rf %s/{}" % 
+        "ls %s | grep %s | xargs -I {} rm -rf %s/{}" %
         (path, grep_regex, path)
     )
 
@@ -159,3 +159,36 @@ def new(c):
     dotfiles(c)
     dock_lock(c)
     dock_lock_size(c)
+
+
+@task
+def screenshot_uploader(c, action, img_client_id, img_secret_id, screenshot_folder):
+    screenshot_folder = os.path.abspath(screenshot_folder)
+    c.run('pip3 install imgur-uploader')
+    c.run('defaults write com.apple.screencapture location "%s"' % screenshot_folder)
+    script_path = base.write_template(
+        c,
+        file_path="%s/%s" % (base.root_templates, 'screenshot_uploader.sh'),
+        destination_path=home + '/.screenshot_automation/'
+    )
+    imgur_python = c.run('which imgur-uploader').stdout.strip()
+    gnu_grep = c.run('which ggrep').stdout.strip()
+    envs = (
+        ('IMGUR_API_ID', img_client_id),
+        ('IMGUR_API_SECRET', img_secret_id),
+        ('imguruploader', imgur_python),
+        ('grep', gnu_grep)
+    )
+    system.launchctl(
+        c,
+        action,
+        label='screenshot.uploader',
+        wait_before_restart=0,
+        file_path="%s/%s" % (base.root_templates, 'screenshot_watcher.plist'),
+        template_context={
+            'screen_shot_path': screenshot_folder,
+            'logfile': '/tmp/screenshot.log',
+            'path_to_script': script_path,
+            'envs': envs
+        }
+    )
