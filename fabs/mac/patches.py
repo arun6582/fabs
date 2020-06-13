@@ -164,6 +164,7 @@ def new(c):
 @task
 def screenshot_uploader(c, action, img_client_id, img_secret_id, screenshot_folder):
     screenshot_folder = os.path.abspath(screenshot_folder)
+    base.mkdir(c, screenshot_folder)
     c.run('pip3 install imgur-uploader')
     c.run('defaults write com.apple.screencapture location "%s"' % screenshot_folder)
     script_path = base.write_template(
