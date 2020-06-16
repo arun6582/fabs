@@ -31,7 +31,14 @@ def write_file(c, path, content, sudo=False):
 
 
 @task
-def append(c, path, content, sudo=False):
+def append(c, path, content, sudo=False, replace_if=None):
+    # supports single line append only
+    # if replace_if is present it will replace the replace_if with content
+    if replace_if:
+        result = c.run('if grep -q %s %s; then echo yes; else echo no; fi' % (replace_if, path)).stdout.strip()
+        if result == 'yes':
+            c.run("sed 's/%s/%s/g' %s" % (replace_if, content, path))
+            return
     if(sudo):
         return c.run("echo '%s' | sudo tee -a '%s'" % (content, path))
     c.run("echo '%s' | tee -a '%s'" % (content, path))
@@ -66,6 +73,7 @@ def env_prefix(env=None):
 def yarn_build(c, path, env=None):
     with c.cd(path):
         c.run("yarn; %s yarn build" % env_prefix(env))
+
 
 @task
 def npm_build(c, path):
