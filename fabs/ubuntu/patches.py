@@ -34,13 +34,6 @@ def setup_ikev2(c, username, password, vpn_name='MyVpn', ssh_port=22):
         },
         sudo=True
     )
-    base.write_template(
-        c,
-        file_path="%s/sysctl.conf" % template_folder,
-        destination_path="/etc/sysctl.conf",
-        sudo=True
-    )
-    c.run('sudo sysctl -p')
     install_script = base.write_template(
         c,
         file_path="%s/configure_script.sh" % template_folder,
@@ -53,6 +46,11 @@ def setup_ikev2(c, username, password, vpn_name='MyVpn', ssh_port=22):
             'secrets_path': secrets_path
         }
     )
+    base.append(c, '/etc/sysctl.conf', 'net.ipv4.ip_forward=1', sudo=True, replace_if='net.ipv4.ip_forward.*')
+    base.append(c, '/etc/sysctl.conf', 'net.ipv4.conf.all.accept_redirects=0', sudo=True, replace_if='net.ipv4.conf.all.accept_redirects.*')
+    base.append(c, '/etc/sysctl.conf', 'net.ipv4.conf.all.send_redirects=0', sudo=True, replace_if='net.ipv4.conf.all.send_redirects.*')
+    base.append(c, '/etc/sysctl.conf', 'net.ipv4.ip_no_pmtu_disc=1', sudo=True, replace_if='net.ipv4.ip_no_pmtu_disc.*')
+    c.sudo('sysctl -p')
+
     c.run('/bin/bash %s' % install_script)
     c.get('/etc/ipsec.d/cacerts/ca-cert.pem')
-    c.sudo('reboot')
