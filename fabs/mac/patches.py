@@ -162,14 +162,14 @@ def new(c):
 
 
 @task
-def screenshot_uploader(c, action, img_client_id, img_secret_id, screenshot_folder):
+def screenshot_uploader_imgur(c, action, img_client_id, img_secret_id, screenshot_folder):
     screenshot_folder = os.path.abspath(screenshot_folder)
     base.mkdir(c, screenshot_folder)
     c.run('pip3 install imgur-uploader')
     c.run('defaults write com.apple.screencapture location "%s"' % screenshot_folder)
     script_path = base.write_template(
         c,
-        file_path="%s/%s" % (base.root_templates, 'screenshot_uploader.sh'),
+        file_path="%s/%s" % (base.root_templates, 'screenshot_uploader_imgur.sh'),
         destination_path=home + '/.screenshot_automation/'
     )
     imgur_python = c.run('which imgur-uploader').stdout.strip()
@@ -179,6 +179,44 @@ def screenshot_uploader(c, action, img_client_id, img_secret_id, screenshot_fold
         ('IMGUR_API_SECRET', img_secret_id),
         ('imguruploader', imgur_python),
         ('grep', gnu_grep)
+    )
+    system.launchctl(
+        c,
+        action,
+        label='screenshot.uploader',
+        wait_before_restart=0,
+        file_path="%s/%s" % (base.root_templates, 'screenshot_watcher.plist'),
+        template_context={
+            'screen_shot_path': screenshot_folder,
+            'logfile': '/tmp/screenshot.log',
+            'path_to_script': script_path,
+            'envs': envs
+        }
+    )
+
+
+@task
+def screenshot_uploader_b2(c, action, b2_client_id, b2_secret_id, bucket, screenshot_folder):
+    screenshot_folder = os.path.abspath(screenshot_folder)
+    base.mkdir(c, screenshot_folder)
+    c.run('pip3 install b2')
+    c.run('defaults write com.apple.screencapture location "%s"' % screenshot_folder)
+    script_path = base.write_template(
+        c,
+        file_path="%s/%s" % (base.root_templates, 'screenshot_uploader_b2.sh'),
+        destination_path=home + '/.screenshot_automation/'
+    )
+    b2_python = c.run('which b2').stdout.strip()
+    gnu_grep = c.run('which ggrep').stdout.strip()
+    envs = (
+        ('B2_APPLICATION_KEY_ID', b2_client_id),
+        ('B2_APPLICATION_KEY', b2_secret_id),
+        ('B2_BUCKET', bucket),
+        ('B2_PATH', b2_python),
+        ('GREP', gnu_grep),
+        ('LC_ALL', 'en_US.UTF-8'),
+        ('LANG', 'en_US.UTF-8'),
+        ('LANGUAGE', 'en_US.UTF-8')
     )
     system.launchctl(
         c,
