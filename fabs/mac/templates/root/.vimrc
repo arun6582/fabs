@@ -14,6 +14,7 @@ Plugin 'kien/ctrlp.vim'
 Plugin 'tpope/vim-fugitive'
 Plugin 'nvie/vim-flake8'
 Plugin 'scrooloose/nerdcommenter'
+Plugin 'ervandew/supertab'
 
 
 " you complete me
