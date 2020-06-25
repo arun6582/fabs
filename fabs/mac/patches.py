@@ -145,7 +145,6 @@ def vim(c):
     c.run("cp %s/.vimrc %s/" % (base.root_templates, home))
     c.run("rm -rf %s/.vim" % home)
     c.run("git clone https://github.com/VundleVim/Vundle.vim.git %s/.vim/bundle/Vundle.vim" % home)
-    c.run("git clone git://github.com/ajh17/VimCompletesMe.git %s/.vim/pack/vendor/start/VimCompletesMe" % home)
     c.run("vim +PluginInstall +qall")
 
 
