@@ -14,6 +14,15 @@ def b2_delete(c, bucket, prefix, file_regex=None, shell_env=None):
 
 @task
 def setup_ikev2(c, username, password, vpn_name='MyVpn', ssh_port=22):
+    """
+    This will setup ipsec proxy on the target server
+    Remember to open relevant ports for something like aws
+    It will download a certificate
+    Instal the certificate by double click in mac
+    set ipSec to Trust
+    add vpn configuration with username,password and ip of target
+    """
+
     template_folder = '%s/ikev2' % base.root_templates
     conf_path = base.write_template(
         c,
