@@ -35,7 +35,7 @@ def proxy(c, action, local_port, host, network, remote_port=9836):
 
 
 @task
-def port_forward(c, action, local_port, remote_port, user, host):
+def port_forward(c, action, local_port, remote_port, user, host, ip='localhost'):
     if(action == '1'):
         action = 'start'
     elif action == '0':
@@ -52,6 +52,7 @@ def port_forward(c, action, local_port, remote_port, user, host):
             'host': host,
             'user': user,
             'local_port': local_port,
+            'ip': ip,
             'remote_port': remote_port,
             'logfile': '/tmp/port_forwarding.log'
         }
