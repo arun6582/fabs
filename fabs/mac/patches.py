@@ -118,10 +118,10 @@ def bash_common(c):
 @task
 def b2_delete(c, bucket, prefix, file_regex=None):
     if(file_regex):
-        return c.run("b2 ls --recursive --long --versions %s %s | grep %s | while read c1 x x x x c6; do b2 delete-file-version $c6 $c1; done" % (
+        return c.run("b2 ls --recursive --long --versions %s %s | grep %s | while read c1 x x x x c6; do b2 delete-file-version $c1; done" % (
             bucket, prefix, file_regex
         ))
-    c.run("b2 ls --recursive --long --versions %s %s | while read c1 x x x x c6; do b2 delete-file-version $c6 $c1; done" % (bucket, prefix))
+    c.run("b2 ls --recursive --long --versions %s %s | while read c1 x x x x c6; do b2 delete-file-version $c1; done" % (bucket, prefix))
 
 
 @task
