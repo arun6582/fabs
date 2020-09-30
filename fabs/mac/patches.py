@@ -162,11 +162,19 @@ def new(c):
 
 
 @task
+def setup_screenshot_format(c, screenshot_folder):
+    base.mkdir(c, screenshot_folder)
+    c.run('defaults write com.apple.screencapture location "%s"' % screenshot_folder)
+    c.run('defaults write com.apple.screencapture name "Screenshot"')
+    c.run('defaults write com.apple.screencapture "include-date" 1')
+    c.run('killall SystemUIServer')
+
+
+@task
 def screenshot_uploader_imgur(c, action, img_client_id, img_secret_id, screenshot_folder):
     screenshot_folder = os.path.abspath(screenshot_folder)
-    base.mkdir(c, screenshot_folder)
     c.run('pip3 install imgur-uploader')
-    c.run('defaults write com.apple.screencapture location "%s"' % screenshot_folder)
+    setup_screenshot_format(c, screenshot_folder)
     script_path = base.write_template(
         c,
         file_path="%s/%s" % (base.root_templates, 'screenshot_uploader_imgur.sh'),
@@ -198,9 +206,8 @@ def screenshot_uploader_imgur(c, action, img_client_id, img_secret_id, screensho
 @task
 def screenshot_uploader_b2(c, action, b2_client_id, b2_secret_id, bucket, screenshot_folder):
     screenshot_folder = os.path.abspath(screenshot_folder)
-    base.mkdir(c, screenshot_folder)
     c.run('pip3 install b2')
-    c.run('defaults write com.apple.screencapture location "%s"' % screenshot_folder)
+    setup_screenshot_format(c, screenshot_folder)
     script_path = base.write_template(
         c,
         file_path="%s/%s" % (base.root_templates, 'screenshot_uploader_b2.sh'),
